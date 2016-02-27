@@ -7,8 +7,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
-    website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    account_number = models.AutoField(primary_key = True)
+    name = models.CharField(max_length = 40)
+    surname = models.CharField(max_length = 40)
+    balance = models.FloatField()
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):

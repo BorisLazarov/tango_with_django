@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from rango.forms import UserForm, UserProfileForm
+from rango.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -12,7 +13,10 @@ def index(request):
     # Retrieve the top 5 only - or all if less than 5.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
     # Render the response and send it back!
-    return render(request, 'rango/index.html')
+    profiles = UserProfile.objects.all()
+    context = dict()
+    context["profiles"] = profiles
+    return render(request, 'rango/index.html', context)
 
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
@@ -59,8 +63,6 @@ def register(request):
 
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
 
             # Now we save the UserProfile model instance.
             profile.save()
