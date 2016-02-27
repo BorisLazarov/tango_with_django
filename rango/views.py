@@ -4,18 +4,25 @@ from rango.forms import UserForm, UserProfileForm
 from rango.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 
 
 def index(request):
+    context = dict()
     # Query the database for a list of ALL categories currently stored.
     # Order the categories by no. likes in descending order.
     # Retrieve the top 5 only - or all if less than 5.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
     # Render the response and send it back!
-    profiles = UserProfile.objects.all()
-    context = dict()
-    context["profiles"] = profiles
+    if request.user.is_authenticated():
+        if request.user.is_superuser:
+            profiles = UserProfile.objects.all()
+            context["profiles"] = profiles
+        else:
+            profile = UserProfile.objects.get(user=User.objects.get(id=request.user.id))
+            context["profile"] = profile
+    else:
+        context= dict()
     return render(request, 'rango/index.html', context)
 
 

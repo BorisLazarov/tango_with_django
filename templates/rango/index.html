@@ -36,6 +36,13 @@
                     </tr>
                 {% endfor %}
             {% endif %}
+            {% if profile %}
+                <tr>
+                    <td>{{profile.name}}</td>
+                    <td>{{profile.surname}}</td>
+                    <td>{{profile.balance}}</td>
+                </tr>
+            {% endif %}
     </tbody>
   </table>
 </div>
