@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from rango.forms import UserForm, UserProfileForm
-from rango.models import UserProfile
+from rango.models import UserProfile,Message
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -22,7 +22,8 @@ def index(request):
             profile = UserProfile.objects.get(user=User.objects.get(id=request.user.id))
             context["profile"] = profile
     else:
-        context= dict()
+        messages = Message.objects.all();
+        context["messages"]= messages
     return render(request, 'rango/index.html', context)
 
 
@@ -67,6 +68,7 @@ def register(request):
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
+            profile.balance = 0
 
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.

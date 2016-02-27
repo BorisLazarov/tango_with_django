@@ -13,7 +13,7 @@
 
 
 
-    {% if user.is_authenticated %}
+       {% if user.is_authenticated %}
         <h1>Rango says... hello {{ user.username }}!</h1>
         <div class="container">
         <h2>Striped Rows</h2>
@@ -47,8 +47,26 @@
   </table>
 </div>
     {% else %}
-        <h1>Rango says... hello world!</h1>
+            <h1>Rango says... hello world!</h1>
+        {% if messages %}
+ <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Author</th>
+                <th>Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td>{{message.author}}</td>
+                    <td>{{message.text}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        {% endif %}
     {% endif %}
+
 
 
     {% if user.is_authenticated %}

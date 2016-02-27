@@ -17,5 +17,10 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Message(models.Model):
+    author = models.ForeignKey(UserProfile)
+    text = models.CharField(max_length=144)
+
+
 
 
