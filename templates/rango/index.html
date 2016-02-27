@@ -14,10 +14,18 @@
 
 
        {% if user.is_authenticated %}
-        <h1>Rango says... hello {{ user.username }}!</h1>
+        <!-- add form here -->
+
+
+
         <div class="container">
-        <h2>Striped Rows</h2>
-        <p>The .table-striped class adds zebra-stripes to a table:</p>            
+        <h2>Welcome {{user.username}}</h2>
+        <p>Add a new message:
+        <form action="postcomment/" method="POST">
+        {% csrf_token %}
+        <input type = "text" name="postmessage"><br>
+        <input type="submit" value="Submit">
+        </form></p>            
         <table class="table table-striped">
             <thead>
             <tr>
@@ -66,7 +74,7 @@
             </tbody>
         {% endif %}
     {% endif %}
-
+</table>
 
 
     {% if user.is_authenticated %}

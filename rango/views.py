@@ -26,7 +26,15 @@ def index(request):
         context["messages"]= messages
     return render(request, 'rango/index.html', context)
 
-
+@login_required
+def process_message(request):
+    if request.method=="POST":
+        author = UserProfile.objects.get(user=User.objects.get(id=request.user.id))
+        message = request.POST["postmessage"]
+        newmessage= Message.objects.get_or_create(author=author, text=message)[0]
+        #newmessage = Message.create(author=author,message=message)
+        newmessage.save()
+        return index(request)
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
