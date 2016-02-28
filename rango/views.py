@@ -26,6 +26,14 @@ def index(request):
         context["messages"]= messages
     return render(request, 'rango/index.html', context)
 
+def _is_secure(self, request):
+    if request.is_secure():
+        return True
+
+    #Handle the Webfaction case until this gets resolved in the request.is_secure()
+    if 'HTTP_X_FORWARDED_PROTO' in request.META:
+        return request.META['HTTP_X_FORWARDED_PROTO'] == 'on'
+
 @login_required
 def process_message(request):
     if request.method=="POST":
