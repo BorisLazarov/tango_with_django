@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html>
     <head>
         <meta charset="utf-8">
@@ -6,14 +7,32 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <title>Rango</title>
+        <title>This is a secure website. Please keep it that way...</title>
     </head>
 
     <body>
 
 
-
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Don't Hack This</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="/rango/about/">About</a></li>
+                    {% if user.is_authenticated %}
+                  <li><a href="/rango/logout/">Log out</a></li>
+                    {% else %}
+                  <li><a href="/rango/register/">Register</a></li>
+                  <li><a href="/rango/login/">login</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </nav>
        {% if user.is_authenticated %}
+       <audio autoplay>
+        <source src="{% static 'images/ycsm.mp3' %}" type="audio/mpeg">
+        </audio>
         <!-- add form here -->
 
 
@@ -55,7 +74,7 @@
   </table>
 </div>
     {% else %}
-            <h1>Rango says... hello world!</h1>
+            <h1>24 hours of work say.. don't hack this!</h1>
         {% if messages %}
  <table class="table table-striped">
             <thead>
@@ -77,16 +96,8 @@
 </table>
 
 
-    {% if user.is_authenticated %}
-        <a href="/rango/restricted/">Restricted Page</a><br />
-        <a href="/rango/logout/">Logout</a><br />
-    {% else %}
-        <a href="/rango/register/">Register Here</a><br />
-        <a href="/rango/login/">Login</a><br />
-    {% endif %}
 
 
-    <a href="/rango/about/">About</a><br/>
     
-    </body>
+</body>
 </html>
