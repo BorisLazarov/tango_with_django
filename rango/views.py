@@ -34,7 +34,7 @@ def process_message(request):
         newmessage= Message.objects.get_or_create(author=author, text=message)[0]
         #newmessage = Message.create(author=author,message=message)
         newmessage.save()
-        return index(request)
+        return HttpResponseRedirect('/rango/')
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
